@@ -1,1 +1,271 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+<title>סיפור בהפתעה</title>
+
+<style>
+
+body{
+margin:0;
+font-family:Arial,sans-serif;
+background:#7E57C2;
+color:white;
+text-align:center;
+padding:20px;
+}
+
+.container{
+max-width:900px;
+margin:auto;
+}
+
+h1{
+font-size:48px;
+}
+
+#storyBox,
+#questionBox,
+#answerBox{
+background:white;
+color:black;
+padding:25px;
+border-radius:20px;
+margin:20px auto;
+max-width:700px;
+font-size:24px;
+line-height:1.7;
+}
+
+button{
+font-size:22px;
+padding:15px 30px;
+border:none;
+border-radius:15px;
+cursor:pointer;
+margin:10px;
+}
+
+.mainBtn{
+background:#FFD400;
+}
+
+.answerBtn{
+background:#4CAF50;
+color:white;
+}
+
+.nextBtn{
+background:#2196F3;
+color:white;
+}
+
+#countdown{
+font-size:60px;
+font-weight:bold;
+margin:20px;
+}
+
+#answerBox{
+display:none;
+}
+
+@media(max-width:600px){
+
+h1{
+font-size:32px;
+}
+
+#storyBox,
+#questionBox,
+#answerBox{
+font-size:18px;
+}
+
+#countdown{
+font-size:42px;
+}
+
+button{
+font-size:18px;
+}
+
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>📚 סיפור בהפתעה</h1>
+
+<div id="storyBox"></div>
+
+<div id="questionArea" style="display:none;">
+
+<div id="questionBox"></div>
+
+<div id="countdown"></div>
+
+<div id="answerBox"></div>
+
+<button class="answerBtn" onclick="showAnswer()">
+🔍 הצג תשובה
+</button>
+
+<button class="nextBtn" onclick="nextQuestion()" style="display:none;" id="nextBtn">
+➡️ שאלה הבאה
+</button>
+
+</div>
+
+<button class="mainBtn" id="startQuestionsBtn" onclick="startQuestions()">
+🚀 עברו לשאלות
+</button>
+
+</div>
+
+<script>
+
+const stories = [
+
+{
+story:
+"ביום שלישי יצאו 4 ילדים לפארק. דנה לבשה חולצה אדומה. רועי הביא 7 תפוחים. על הדשא היה כדור כחול. לידם עמד כלב לבן.",
+
+questions:[
+{
+q:"כמה ילדים היו בפארק?",
+a:"4"
+},
+{
+q:"איזה צבע היה הכדור?",
+a:"כחול"
+},
+{
+q:"כמה תפוחים היו?",
+a:"7"
+}
+]
+},
+
+{
+story:
+"ביום חמישי נסעו 3 חברים לים. הם לקחו 5 בקבוקי מים. נועה ישבה על מגבת צהובה. לידם הייתה מטרייה ירוקה.",
+
+questions:[
+{
+q:"כמה חברים נסעו לים?",
+a:"3"
+},
+{
+q:"איזה צבע הייתה המגבת?",
+a:"צהובה"
+},
+{
+q:"כמה בקבוקי מים היו?",
+a:"5"
+}
+]
+}
+
+];
+
+let currentStory;
+let currentQuestion = 0;
+
+function loadStory(){
+
+currentStory =
+stories[Math.floor(Math.random()*stories.length)];
+
+document.getElementById("storyBox").innerHTML =
+currentStory.story;
+
+}
+
+function startQuestions(){
+
+document.getElementById("storyBox").style.display="none";
+
+document.getElementById("startQuestionsBtn").style.display="none";
+
+document.getElementById("questionArea").style.display="block";
+
+showQuestion();
+
+}
+
+function showQuestion(){
+
+document.getElementById("answerBox").style.display="none";
+
+document.getElementById("nextBtn").style.display="none";
+
+document.getElementById("questionBox").innerHTML =
+currentStory.questions[currentQuestion].q;
+
+let time = 5;
+
+document.getElementById("countdown").innerHTML = time;
+
+const timer = setInterval(()=>{
+
+time--;
+
+if(time>=0){
+
+document.getElementById("countdown").innerHTML = time;
+
+}
+
+if(time<=0){
+
+clearInterval(timer);
+
+document.getElementById("countdown").innerHTML =
+"⏰";
+
+}
+
+},1000);
+
+}
+
+function showAnswer(){
+
+document.getElementById("answerBox").style.display="block";
+
+document.getElementById("answerBox").innerHTML =
+"✅ " + currentStory.questions[currentQuestion].a;
+
+document.getElementById("nextBtn").style.display="inline-block";
+
+}
+
+function nextQuestion(){
+
+currentQuestion++;
+
+if(currentQuestion >= currentStory.questions.length){
+
+location.reload();
+
+return;
+
+}
+
+showQuestion();
+
+}
+
+loadStory();
+
+</script>
+
+</body>
+</html>
