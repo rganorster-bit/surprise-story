@@ -253,6 +253,22 @@ let questionIndex = 0;
 let seconds = 0;
 let timer;
 
+// תשובות קצרות לכל סיפור
+const answers = [
+["3 חברים","אדומה","5 כריכים","ליד הספסל הירוק","עפיפון סגול"],
+["לים","ירוקה","8 עוגיות","דנה","צדף לבן ומבריק"],
+["ליער","מפה","7 פרפרים","כחולה","ליד סלע עגול"],
+["איתן","כחולה","6 נרות","צהובים","דניאל"],
+["לחם","שחורה","4 אנשים","3 לחמניות","חתול אפור"],
+["בבית הספר","עמית","20 פעמים","ירוקה","מדליות זהב"],
+["4 ילדים","חנה","דינוזאורים ירוקים","כחולה","2 ספרים"],
+["רכיבה באופניים","אדומים","ורודה","ליד עץ גבוה","בננות"],
+["פיצה","2 פיצות","בקבוק לימונדה","נועה","3 משולשים"],
+["בשכונה","תפוחים אדומים","3 בלונים","סגול","סלסלה צהובה"]
+];
+
+let questionOrder=[0,1,2,3,4].sort(()=>Math.random()-0.5);
+
 document.getElementById("storyBox").innerHTML =
 currentStory.story.join("<br>");
 
@@ -273,9 +289,10 @@ showQuestion();
 }
 
 function showQuestion(){
+let idx=questionOrder[questionIndex];
 document.getElementById("questionBox").innerHTML =
-"שאלה " + (questionIndex+1) + ":<br>" +
-currentStory.questions[questionIndex];
+"שאלה "+(questionIndex+1)+":<br>"+currentStory.questions[idx]+
+"<br><br><span style='color:green;font-size:20px;'>✅ תשובה: <strong>"+answers[stories.indexOf(currentStory)][idx]+"</strong></span>";
 }
 
 function nextQuestion(){
